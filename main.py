@@ -1,16 +1,18 @@
-from PyQt6 import QtGui, uic, QtCore
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
+from PyQt6 import QtGui, uic
+from PyQt6.QtWidgets import QApplication, QMainWindow
 import sys
 import random
 
-class Form(QMainWindow):
+from ui import Ui_MainWindow
+
+class Form(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         uic.load_ui.loadUi("UI.ui", self)
+        self.setupUi(self)
         self.initUI()
 
     def initUI(self):
-        self.button = self.findChild(QPushButton, 'button')
         self.button.clicked.connect(self.createCircle)
         self.do_paint = True
 
@@ -18,7 +20,7 @@ class Form(QMainWindow):
         if self.do_paint:
             painter = QtGui.QPainter()
             painter.begin(self)
-            painter.setBrush(QtCore.Qt.GlobalColor.yellow)
+            painter.setBrush(QtGui.QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
             x, y = random.randint(0, 800), random.randint(0, 600)
             width = random.randint(0, 500)
             painter.drawEllipse(x, y, width, width)
